@@ -14,4 +14,10 @@ bitset<8> p8(bitset<10> &key);
 // circular shift on each of the halves of the key
 bitset<10> shift(bitset<10> &key, int num);
 
+// initial permutation
+bitset<8> ip(bitset<8> &data);
+
+// (initial permutation)^-1
+bitset<8> ip_inverse(bitset<8> &data);
+
 #endif

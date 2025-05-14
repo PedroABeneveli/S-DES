@@ -45,3 +45,33 @@ bitset<10> shift(bitset<10> &key, int num) {
 
     return shifted_key;
 }
+
+bitset<8> ip(bitset<8> &data) {
+    bitset<8> permutation;
+
+    permutation[0] = data[1];
+    permutation[1] = data[5];
+    permutation[2] = data[2];
+    permutation[3] = data[0];
+    permutation[4] = data[3];
+    permutation[5] = data[7];
+    permutation[6] = data[4];
+    permutation[7] = data[6];
+
+    return permutation;
+}
+
+bitset<8> ip_inverse(bitset<8> &data) {
+    bitset<8> permutation;
+
+    permutation[0] = data[3];
+    permutation[1] = data[0];
+    permutation[2] = data[2];
+    permutation[3] = data[4];
+    permutation[4] = data[6];
+    permutation[5] = data[1];
+    permutation[6] = data[7];
+    permutation[7] = data[5];
+
+    return permutation;
+}
