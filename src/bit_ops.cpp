@@ -33,13 +33,9 @@ bitset<8> p8(bitset<10> &key) {
 }
 
 bitset<10> shift(bitset<10> &key, int num) {
-    // as the key is small, we can directly map the bits from the key to the resulting shift
-    // k0 k1 k2 k3 k4 | k5 k6 k7 k8 k9
-    // =>
-    // k1 k2 k3 k4 k0 | k6 k7 k8 k9 k5
-
     bitset<10> shifted_key;
-
+    num %= 5;   // to garantee that (index - num) > -5
+    
     for (int i = 0 ; i < 10 ; i++) {
         if (i < 5)
             shifted_key[(i-num + 5) % 5] = key[i];
