@@ -1,5 +1,6 @@
-#include "sdes.h"
-#include "bit_ops.h"
+#include "../headers/sdes.h"
+#include "../headers/bit_ops.h"
+#include "../headers/utils.h"
 
 bitset<4> F_mapping(bitset<4> &half, bitset<8> &key) {
     bitset<8> expanded = e_p(half);
@@ -52,4 +53,24 @@ bitset<8> fk(bitset<8> &text, bitset<8> &key) {
     result[7] = R[3];
 
     return result;
+}
+
+pair<bitset<8>, bitset<8>> subkey_generation(bitset<10> key) {
+    bitset<10> key_p10, key_1shift, key_2shift;
+    bitset<8> k1, k2;
+
+    key_p10 = p10(key);
+    key_1shift = shift(key_p10, 1);
+    k1 = p8(key_1shift);
+    key_2shift = shift(key_1shift, 2);
+    k2 = p8(key_2shift);
+
+    cout << "Chave: " << show_data(key) << '\n';
+    cout << "Chave apos P10 (K_P10): " << show_data(key_p10) << '\n';
+    cout << "K_P10 apos o primeiro shift (K_S1): " << show_data(key_1shift) << '\n';
+    cout << "Subchave 1 (K1): " << show_data(k1) << '\n';
+    cout << "K_S1 apos passar pelo segundo shift (K_S2): " << show_data(key_2shift) << '\n';
+    cout << "Subchave 2 (K2): " << show_data(k2) << '\n';
+
+    return make_pair(k1, k2);
 }

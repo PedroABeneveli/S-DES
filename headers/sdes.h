@@ -7,4 +7,6 @@ bitset<4> F_mapping(bitset<4> &half, bitset<8> &key);
 
 bitset<8> fk(bitset<8> &text, bitset<8> &key);
 
+pair<bitset<8>, bitset<8>> subkey_generation(bitset<10> key);
+
 #endif
