@@ -20,4 +20,11 @@ bitset<8> ip(bitset<8> &data);
 // (initial permutation)^-1
 bitset<8> ip_inverse(bitset<8> &data);
 
+// operations needed for F mapping
+
+bitset<8> e_p(bitset<4> &num);
+bitset<2> S0(bitset<4> &num);
+bitset<2> S1(bitset<4> &num);
+bitset<4> p4(bitset<4> &num);
+
 #endif

@@ -75,3 +75,63 @@ bitset<8> ip_inverse(bitset<8> &data) {
 
     return permutation;
 }
+
+bitset<8> e_p(bitset<4> &num) {
+    bitset<8> expansion;
+
+    expansion[0] = num[3];
+    expansion[1] = num[0];
+    expansion[2] = num[1];
+    expansion[3] = num[2];
+    expansion[4] = num[1];
+    expansion[5] = num[2];
+    expansion[6] = num[3];
+    expansion[7] = num[0];
+
+    return expansion;
+}
+
+bitset<2> S0(bitset<4> &num) {
+    int s_box[4][4];
+
+    // matrix initialization
+    s_box[0][0] = 1; s_box[0][1] = 0; s_box[0][2] = 3; s_box[0][3] = 2;
+    s_box[1][0] = 3; s_box[1][1] = 2; s_box[1][2] = 1; s_box[1][3] = 0;
+    s_box[2][0] = 0; s_box[2][1] = 2; s_box[2][2] = 1; s_box[2][3] = 3;
+    s_box[3][0] = 3; s_box[3][1] = 1; s_box[3][2] = 3; s_box[3][3] = 2;
+
+    int lin, col;
+    lin = num[0]<<1 + num[3];
+    col = num[1]<<1 + num[2];
+
+    bitset<2> ans(s_box[lin][col]);
+    return ans;
+}
+
+bitset<2> S1(bitset<4> &num) {
+    int s_box[4][4];
+
+    // matrix initialization
+    s_box[0][0] = 0; s_box[0][1] = 1; s_box[0][2] = 2; s_box[0][3] = 3;
+    s_box[1][0] = 2; s_box[1][1] = 0; s_box[1][2] = 1; s_box[1][3] = 3;
+    s_box[2][0] = 3; s_box[2][1] = 0; s_box[2][2] = 1; s_box[2][3] = 0;
+    s_box[3][0] = 2; s_box[3][1] = 1; s_box[3][2] = 0; s_box[3][3] = 3;
+
+    int lin, col;
+    lin = num[0]<<1 + num[3];
+    col = num[1]<<1 + num[2];
+
+    bitset<2> ans(s_box[lin][col]);
+    return ans;
+}
+
+bitset<4> p4(bitset<4> &num) {
+    bitset<4> permutation;
+
+    permutation[0] = num[1];
+    permutation[1] = num[3];
+    permutation[2] = num[2];
+    permutation[3] = num[0];
+
+    return permutation;
+}
