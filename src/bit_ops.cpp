@@ -1,4 +1,4 @@
-#include "bit_ops.h"
+#include "../headers/bit_ops.h"
 
 bitset<10> p10(bitset<10> &key) {
     bitset<10> permutation;
@@ -30,4 +30,22 @@ bitset<8> p8(bitset<10> &key) {
     subkey[7] = key[8];
 
     return subkey;
+}
+
+bitset<10> shift(bitset<10> &key, int num) {
+    // as the key is small, we can directly map the bits from the key to the resulting shift
+    // k0 k1 k2 k3 k4 | k5 k6 k7 k8 k9
+    // =>
+    // k1 k2 k3 k4 k0 | k6 k7 k8 k9 k5
+
+    bitset<10> shifted_key;
+
+    for (int i = 0 ; i < 10 ; i++) {
+        if (i < 5)
+            shifted_key[(i-num + 5) % 5] = key[i];
+        else 
+            shifted_key[5 + ((i-5)-num + 5) % 5] = key[i];
+    }
+
+    return shifted_key;
 }
