@@ -101,8 +101,8 @@ bitset<2> S0(bitset<4> &num) {
     s_box[3][0] = 3; s_box[3][1] = 1; s_box[3][2] = 3; s_box[3][3] = 2;
 
     int lin, col;
-    lin = num[0]<<1 + num[3];
-    col = num[1]<<1 + num[2];
+    lin = (num[0]<<1) + num[3];
+    col = (num[1]<<1) + num[2];
 
     bitset<2> ans(s_box[lin][col]);
     return ans;
@@ -118,8 +118,8 @@ bitset<2> S1(bitset<4> &num) {
     s_box[3][0] = 2; s_box[3][1] = 1; s_box[3][2] = 0; s_box[3][3] = 3;
 
     int lin, col;
-    lin = num[0]<<1 + num[3];
-    col = num[1]<<1 + num[2];
+    lin = (num[0]<<1) + num[3];
+    col = (num[1]<<1) + num[2];
 
     bitset<2> ans(s_box[lin][col]);
     return ans;
@@ -134,4 +134,15 @@ bitset<4> p4(bitset<4> &num) {
     permutation[3] = num[0];
 
     return permutation;
+}
+
+bitset<8> sw(bitset<8> &text) {
+    bitset<8> result;
+
+    for (int i = 0 ; i < 4 ; i++) {
+        result[i] = text[i+4];
+        result[i+4] = text[i];
+    }
+
+    return result;
 }

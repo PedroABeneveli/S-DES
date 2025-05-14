@@ -27,4 +27,7 @@ bitset<2> S0(bitset<4> &num);
 bitset<2> S1(bitset<4> &num);
 bitset<4> p4(bitset<4> &num);
 
+// switch function
+bitset<8> sw(bitset<8> &text); 
+
 #endif

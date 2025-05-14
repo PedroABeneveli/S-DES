@@ -9,4 +9,6 @@ bitset<8> fk(bitset<8> &text, bitset<8> &key);
 
 pair<bitset<8>, bitset<8>> subkey_generation(bitset<10> key);
 
+bitset<8> encrypt(bitset<8> plain_text, bitset<10> key);
+
 #endif

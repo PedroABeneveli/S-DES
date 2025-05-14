@@ -20,10 +20,12 @@ bitset<4> F_mapping(bitset<4> &half, bitset<8> &key) {
     s0_ret = S0(L);
     s1_ret = S1(R);
 
-    concat[0] = s0_ret[0];
-    concat[1] = s0_ret[1];
-    concat[2] = s1_ret[0];
-    concat[3] = s1_ret[1];
+    concat[3] = s1_ret[0];
+    concat[2] = s1_ret[1];
+    concat[1] = s0_ret[0];
+    concat[0] = s0_ret[1];
+
+    cout << concat << '\n';
 
     return p4(concat);
 }
@@ -73,4 +75,32 @@ pair<bitset<8>, bitset<8>> subkey_generation(bitset<10> key) {
     cout << "Subchave 2 (K2): " << show_data(k2) << '\n';
 
     return make_pair(k1, k2);
+}
+
+bitset<8> encrypt(bitset<8> plain_text, bitset<10> key) {
+    bitset<8> k1, k2, cipher_text;
+
+    tie(k1, k2) = subkey_generation(key);
+
+    cout << "Plain Text: " << show_data(plain_text) << '\n';
+
+    cipher_text = ip(plain_text);
+
+    cout << "Mensagem apos IP: " << show_data(cipher_text) << '\n';
+
+    cipher_text = fk(cipher_text, k1);
+
+    cout << "Mensagem apos a primeira fk: " << show_data(cipher_text) << '\n';
+
+    cipher_text = sw(cipher_text);
+
+    cout << "Mensagem apos o primeiro switch: " << show_data(cipher_text) << '\n';
+
+    cipher_text = fk(cipher_text, k2);
+
+    cout << "Mensagem apos a segunda fk: " << show_data(cipher_text) << '\n';
+
+    cipher_text = ip_inverse(cipher_text);
+
+    return cipher_text;
 }
