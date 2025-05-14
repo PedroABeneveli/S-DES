@@ -11,4 +11,6 @@ pair<bitset<8>, bitset<8>> subkey_generation(bitset<10> key);
 
 bitset<8> encrypt(bitset<8> plain_text, bitset<10> key);
 
+bitset<8> decrypt(bitset<8> cipher_text, bitset<10> key);
+
 #endif
