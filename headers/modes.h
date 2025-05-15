@@ -8,4 +8,7 @@
 string eletronic_codebook_encrypt(string &plain_text, bitset<10> &key);
 string eletronic_codebook_decrypt(string &cipher_text, bitset<10> &key);
 
+string cipher_block_chaining_encrypt(string &plain_text, bitset<10> &key, bitset<8> init_vector);
+string cipher_block_chaining_decrypt(string &cipher_text, bitset<10> &key, bitset<8> init_vector);
+
 #endif
