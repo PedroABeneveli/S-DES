@@ -1,6 +1,6 @@
-#include "../headers/sdes.h"
-#include "../headers/bit_ops.h"
-#include "../headers/utils.h"
+#include "sdes.h"
+#include "bit_ops.h"
+#include "utils.h"
 
 bitset<4> F_mapping(bitset<4> &half, bitset<8> &key) {
     bitset<8> expanded = e_p(half);

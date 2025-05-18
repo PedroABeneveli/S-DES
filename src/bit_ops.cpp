@@ -1,4 +1,4 @@
-#include "../headers/bit_ops.h"
+#include "bit_ops.h"
 
 bitset<10> p10(bitset<10> &key) {
     bitset<10> permutation;
