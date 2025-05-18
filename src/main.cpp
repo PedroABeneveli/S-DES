@@ -92,7 +92,7 @@ int main() {
                     continue;
                 }
 
-                message = eletronic_codebook_encrypt(message, key);
+                message = eletronic_codebook_encrypt(message, key, true);
                 cout << "\nTexto cifrado:\n    ";
                 for (int i = 0 ; i < (int) message.size() ; i += 8) {
                     temp = message.substr(i, 8);
@@ -114,7 +114,7 @@ int main() {
                     continue;
                 }
 
-                message = eletronic_codebook_decrypt(message, key);
+                message = eletronic_codebook_decrypt(message, key, true);
                 cout << "\nTexto em claro:\n    ";
                 for (int i = 0 ; i < (int) message.size() ; i += 8) {
                     temp = message.substr(i, 8);
@@ -143,7 +143,7 @@ int main() {
             getchar();      // retira o ultimo \n do terminal que nao foi lido com o cin
 
             if (sub_op == 1) {
-                cout << "\nDigite o texto em claro (tamanho multiplo de 8):\n";
+                cout << "\nDigite o texto em claro (numero de bits multiplo de 8):\n";
                 getline(cin, temp);
 
                 // removendo espacos em branco
@@ -157,7 +157,7 @@ int main() {
                     continue;
                 }
 
-                message = cipher_block_chaining_encrypt(message, key, iv);
+                message = cipher_block_chaining_encrypt(message, key, iv, true);
                 cout << "\nTexto cifrado:\n    ";
                 for (int i = 0 ; i < (int) message.size() ; i += 8) {
                     temp = message.substr(i, 8);
@@ -179,7 +179,7 @@ int main() {
                     continue;
                 }
 
-                message = cipher_block_chaining_decrypt(message, key, iv);
+                message = cipher_block_chaining_decrypt(message, key, iv, true);
                 cout << "\nTexto em claro:\n    ";
                 for (int i = 0 ; i < (int) message.size() ; i += 8) {
                     temp = message.substr(i, 8);
