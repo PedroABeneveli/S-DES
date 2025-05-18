@@ -10,7 +10,7 @@ string eletronic_codebook_encrypt(string &plain_text, bitset<10> &key) {
         block = plain_text.substr(i, 8);
 
         text = text_to_bits(block);
-        text = encrypt(text, key);
+        text = sdes_encrypt(text, key);
         cipher_text += show_data(text);
     }
 
@@ -25,7 +25,7 @@ string eletronic_codebook_decrypt(string &cipher_text, bitset<10> &key) {
         block = cipher_text.substr(i, 8);
 
         text = text_to_bits(block);
-        text = decrypt(text, key);
+        text = sdes_decrypt(text, key);
         plain_text += show_data(text);
     }
 
@@ -41,7 +41,7 @@ string cipher_block_chaining_encrypt(string &plain_text, bitset<10> &key, bitset
 
         text = text_to_bits(block);
         text = text ^ prev;
-        text = encrypt(text, key);
+        text = sdes_encrypt(text, key);
         cipher_text += show_data(text);
 
         prev = text;
@@ -59,7 +59,7 @@ string cipher_block_chaining_decrypt(string &cipher_text, bitset<10> &key, bitse
 
         cipher_block = text_to_bits(block);
 
-        text = decrypt(cipher_block, key);
+        text = sdes_decrypt(cipher_block, key);
         text = text ^ prev;
 
         plain_text += show_data(text);

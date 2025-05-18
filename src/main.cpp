@@ -35,7 +35,7 @@ int main() {
 
         if (main_op == 1) {
             cout << "\nTodas chaves geradas:\n\n";
-            subkey_generation(key);
+            subkey_generation(key, true);
         } else if (main_op == 2) {
             cout << "\nDigite 1 para realizar uma encriptacao, e 2 para realizar uma decriptacao.\n";
             cin >> sub_op;
@@ -53,8 +53,8 @@ int main() {
                 }
 
                 message = text_to_bits(temp);
-                message = encrypt(message, key);
-                cout << "\nTexto cifrado:\n\t" << show_data(message) << '\n';
+                message = sdes_encrypt(message, key, true);
+                cout << "Texto cifrado:\n    " << show_data(message) << '\n';
             } else if (sub_op == 2) {
                 cout << "\nDigite o texto cifrado (8 bits):\n";
                 cin >> temp;
@@ -66,8 +66,8 @@ int main() {
                 }
 
                 message = text_to_bits(temp);
-                message = decrypt(message, key);
-                cout << "\nTexto em claro:\n\t" << show_data(message) << '\n';
+                message = sdes_decrypt(message, key, true);
+                cout << "Texto em claro:\n    " << show_data(message) << '\n';
             } else {
                 cout << "\nOperacao invalida\n";
             }
@@ -93,7 +93,7 @@ int main() {
                 }
 
                 message = eletronic_codebook_encrypt(message, key);
-                cout << "\nTexto cifrado:\n\t";
+                cout << "\nTexto cifrado:\n    ";
                 for (int i = 0 ; i < (int) message.size() ; i += 8) {
                     temp = message.substr(i, 8);
                     cout << temp << ' ';
@@ -115,7 +115,7 @@ int main() {
                 }
 
                 message = eletronic_codebook_decrypt(message, key);
-                cout << "\nTexto em claro:\n\t";
+                cout << "\nTexto em claro:\n    ";
                 for (int i = 0 ; i < (int) message.size() ; i += 8) {
                     temp = message.substr(i, 8);
                     cout << temp << ' ';
@@ -158,7 +158,7 @@ int main() {
                 }
 
                 message = cipher_block_chaining_encrypt(message, key, iv);
-                cout << "\nTexto cifrado:\n\t";
+                cout << "\nTexto cifrado:\n    ";
                 for (int i = 0 ; i < (int) message.size() ; i += 8) {
                     temp = message.substr(i, 8);
                     cout << temp << ' ';
@@ -180,7 +180,7 @@ int main() {
                 }
 
                 message = cipher_block_chaining_decrypt(message, key, iv);
-                cout << "\nTexto em claro:\n\t";
+                cout << "\nTexto em claro:\n    ";
                 for (int i = 0 ; i < (int) message.size() ; i += 8) {
                     temp = message.substr(i, 8);
                     cout << temp << ' ';

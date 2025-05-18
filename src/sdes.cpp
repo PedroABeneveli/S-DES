@@ -55,7 +55,7 @@ bitset<8> fk(bitset<8> &text, bitset<8> &key) {
     return result;
 }
 
-pair<bitset<8>, bitset<8>> subkey_generation(bitset<10> key) {
+pair<bitset<8>, bitset<8>> subkey_generation(bitset<10> key, bool print) {
     bitset<10> key_p10, key_1shift, key_2shift;
     bitset<8> k1, k2;
 
@@ -65,66 +65,68 @@ pair<bitset<8>, bitset<8>> subkey_generation(bitset<10> key) {
     key_2shift = shift(key_1shift, 2);
     k2 = p8(key_2shift);
 
-    cout << "Chave: " << show_data(key) << '\n';
-    cout << "Chave apos P10 (K_P10): " << show_data(key_p10) << '\n';
-    cout << "K_P10 apos o primeiro shift (K_S1): " << show_data(key_1shift) << '\n';
-    cout << "Subchave 1 (K1): " << show_data(k1) << '\n';
-    cout << "K_S1 apos passar pelo segundo shift (K_S2): " << show_data(key_2shift) << '\n';
-    cout << "Subchave 2 (K2): " << show_data(k2) << '\n';
+    if (print) {
+        cout << "Chave:\n    " << show_data(key) << '\n';
+        cout << "\nChave apos P10 (K_P10):\n    " << show_data(key_p10) << '\n';
+        cout << "\nK_P10 apos o primeiro shift (K_S1):\n    " << show_data(key_1shift) << '\n';
+        cout << "\nSubchave 1 (K1):\n    " << show_data(k1) << '\n';
+        cout << "\nK_S1 apos passar pelo segundo shift (K_S2):\n    " << show_data(key_2shift) << '\n';
+        cout << "\nSubchave 2 (K2):\n    " << show_data(k2) << '\n';
+    }
 
     return make_pair(k1, k2);
 }
 
-bitset<8> encrypt(bitset<8> plain_text, bitset<10> key) {
+bitset<8> sdes_encrypt(bitset<8> plain_text, bitset<10> key, bool print) {
     bitset<8> k1, k2, cipher_text;
 
     tie(k1, k2) = subkey_generation(key);
 
-    cout << "Plain Text: " << show_data(plain_text) << '\n';
+    if (print) cout << "\nPlain Text:\t\t\t" << show_data(plain_text) << "\n";
 
     cipher_text = ip(plain_text);
 
-    cout << "Mensagem apos IP: " << show_data(cipher_text) << '\n';
+    if (print) cout << "Mensagem apos IP:\t\t" << show_data(cipher_text) << "\n";
 
     cipher_text = fk(cipher_text, k1);
 
-    cout << "Mensagem apos fk com k1: " << show_data(cipher_text) << '\n';
+    if (print) cout << "Mensagem apos fk com k1:\t" << show_data(cipher_text) << "\n";
 
     cipher_text = sw(cipher_text);
 
-    cout << "Mensagem apos o switch: " << show_data(cipher_text) << '\n';
+    if (print) cout << "Mensagem apos o switch:\t\t" << show_data(cipher_text) << "\n";
 
     cipher_text = fk(cipher_text, k2);
 
-    cout << "Mensagem apos fk com k2: " << show_data(cipher_text) << '\n';
+    if (print) cout << "Mensagem apos fk com k2:\t" << show_data(cipher_text) << "\n";
 
     cipher_text = ip_inverse(cipher_text);
 
     return cipher_text;
 }
 
-bitset<8> decrypt(bitset<8> cipher_text, bitset<10> key) {
+bitset<8> sdes_decrypt(bitset<8> cipher_text, bitset<10> key, bool print) {
     bitset<8> k1, k2, plain_text;
 
     tie(k1, k2) = subkey_generation(key);
 
-    cout << "Cipher Text: " << show_data(cipher_text) << '\n';
+    if (print) cout << "\nCipher Text:\t\t\t" << show_data(cipher_text) << '\n';
 
     plain_text = ip(cipher_text);
 
-    cout << "Mensagem apos IP: " << show_data(plain_text) << '\n';
+    if (print) cout << "Mensagem apos IP:\t\t" << show_data(plain_text) << '\n';
 
     plain_text = fk(plain_text, k2);
 
-    cout << "Mensagem apos fk com k2: " << show_data(plain_text) << '\n';
+    if (print) cout << "Mensagem apos fk com k2:\t" << show_data(plain_text) << '\n';
 
     plain_text = sw(plain_text);
 
-    cout << "Mensagem apos o switch: " << show_data(plain_text) << '\n';
+    if (print) cout << "Mensagem apos o switch:\t\t" << show_data(plain_text) << '\n';
 
     plain_text = fk(plain_text, k1);
 
-    cout << "Mensagem apos fk com k1: " << show_data(plain_text) << '\n';
+    if (print) cout << "Mensagem apos fk com k1:\t" << show_data(plain_text) << '\n';
 
     return ip_inverse(plain_text);
 }
