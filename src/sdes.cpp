@@ -2,10 +2,14 @@
 #include "bit_ops.h"
 #include "utils.h"
 
-bitset<4> F_mapping(bitset<4> &half, bitset<8> &key) {
+bitset<4> F_mapping(bitset<4> &half, bitset<8> &key, bool print) {
     bitset<8> expanded = e_p(half);
     bitset<4> L, R, concat;
     bitset<2> s0_ret, s1_ret;
+
+    if (print) {
+        cout << "\t\tMetade expandida = " << show_data(expanded) << "\n";
+    }
 
     expanded = expanded ^ key;
     L[0] = expanded[0];
@@ -17,19 +21,28 @@ bitset<4> F_mapping(bitset<4> &half, bitset<8> &key) {
     R[2] = expanded[6];
     R[3] = expanded[7];
 
+    if (print) cout << "\t\tMetade expandida XOR " << show_data(key) << " (subchave) = " << show_data(expanded) << "\n";
+
     s0_ret = S0(L);
     s1_ret = S1(R);
 
+    // para deixar a concatenacao do jeito que a especificacao pede
     concat[3] = s1_ret[0];
     concat[2] = s1_ret[1];
     concat[1] = s0_ret[0];
     concat[0] = s0_ret[1];
 
+    if (print) {
+        cout << "\t\tS0 retornou " << s0_ret << "\n";
+        cout << "\t\tS1 retornou " << s1_ret << "\n";
+        cout << "\t\tS0 + S1 = " << show_data(concat) << "\n";
+    }
+
     return p4(concat);
 }
 
-bitset<8> fk(bitset<8> &text, bitset<8> &key) {
-    bitset<4> L, R;
+bitset<8> fk(bitset<8> &text, bitset<8> &key, bool print) {
+    bitset<4> L, R, F_result;
     bitset<8> result;
 
     L[0] = text[0];
@@ -41,7 +54,15 @@ bitset<8> fk(bitset<8> &text, bitset<8> &key) {
     R[2] = text[6];
     R[3] = text[7];
 
-    L = L ^ F_mapping(R, key);
+    if (print) cout << "\tL = " << show_data(L) << ", R = " << show_data(R) << "\n\tF_mapping:\n";
+
+    F_result = F_mapping(R, key, print);
+
+    if (print) cout << "\tResultado F_mapping = " << show_data(F_result) << "\n";
+
+    L = L ^ F_result;
+
+    if (print) cout << "\tNovo L = " << show_data(L) << "\n";
 
     result[0] = L[0];
     result[1] = L[1];
@@ -86,9 +107,9 @@ bitset<8> sdes_encrypt(bitset<8> plain_text, bitset<10> key, bool print) {
 
     cipher_text = ip(plain_text);
 
-    if (print) cout << "Mensagem apos IP:\t\t" << show_data(cipher_text) << "\n";
+    if (print) cout << "Mensagem apos IP:\t\t" << show_data(cipher_text) << "\nPrimeiro fk:\n";
 
-    cipher_text = fk(cipher_text, k1);
+    cipher_text = fk(cipher_text, k1, print);
 
     if (print) cout << "Mensagem apos fk com k1:\t" << show_data(cipher_text) << "\n";
 
@@ -96,7 +117,7 @@ bitset<8> sdes_encrypt(bitset<8> plain_text, bitset<10> key, bool print) {
 
     if (print) cout << "Mensagem apos o switch:\t\t" << show_data(cipher_text) << "\n";
 
-    cipher_text = fk(cipher_text, k2);
+    cipher_text = fk(cipher_text, k2, print);
 
     if (print) cout << "Mensagem apos fk com k2:\t" << show_data(cipher_text) << "\n";
 
@@ -116,7 +137,7 @@ bitset<8> sdes_decrypt(bitset<8> cipher_text, bitset<10> key, bool print) {
 
     if (print) cout << "Mensagem apos IP:\t\t" << show_data(plain_text) << '\n';
 
-    plain_text = fk(plain_text, k2);
+    plain_text = fk(plain_text, k2, print);
 
     if (print) cout << "Mensagem apos fk com k2:\t" << show_data(plain_text) << '\n';
 
@@ -124,7 +145,7 @@ bitset<8> sdes_decrypt(bitset<8> cipher_text, bitset<10> key, bool print) {
 
     if (print) cout << "Mensagem apos o switch:\t\t" << show_data(plain_text) << '\n';
 
-    plain_text = fk(plain_text, k1);
+    plain_text = fk(plain_text, k1, print);
 
     if (print) cout << "Mensagem apos fk com k1:\t" << show_data(plain_text) << '\n';
 

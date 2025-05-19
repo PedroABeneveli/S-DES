@@ -1,5 +1,14 @@
 #include "utils.h"
 
+string show_data(bitset<4> &data) {
+    string result;
+
+    for (int i = 0 ; i < 4 ; i++) 
+        result.push_back(data[i]+'0');
+
+    return result;
+}
+
 string show_data(bitset<8> &data) {
     string result;
 
